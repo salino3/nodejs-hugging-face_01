@@ -25,3 +25,21 @@ try {
 } catch (error) {
   console.error(error);
 }
+
+//----------------------------------------------------------------
+
+const model2 = "facebook/nllb-200-distilled-600M";
+
+try {
+  const result = await hf.translation({
+    inputs: "Hello, good morning people",
+    model: model2,
+    parameters: {
+      "src_lang": "en",
+      "tgt_lang": "es",
+    },
+  });
+  console.log("Result 2: ", result);
+} catch (error) {
+  console.error(error);
+}
