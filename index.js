@@ -10,14 +10,36 @@ const imageURL =
 //   "https://tse4.mm.bing.net/th?id=OIP.O6wVX9TSLCs46Yqk6EUhNwHaE7&pid=Api&P=0&h=180";
 //   "https://tse4.mm.bing.net/th?id=OIP.7zY84_qTmfrAGCyXBlnuOwHaFj&pid=Api&P=0&h=180";
 
-const response = await fetch(imageURL);
-const blob = await response.blob();
-
 const model = "Salesforce/blip-image-captioning-large";
+// "microsoft/trocr-base-handwritten";
 
-const result = await hf.imageToText({
-  data: blob,
-  model,
-});
+try {
+  const response = await fetch(imageURL);
+  const blob = await response.blob();
 
-console.log("Result: ", result);
+  const result = await hf.imageToText({
+    data: blob,
+    model,
+  });
+  console.log("Result: ", result);
+} catch (error) {
+  console.error(error);
+}
+
+//----------------------------------------------------------------
+
+const model2 = "facebook/nllb-200-distilled-600M";
+
+try {
+  const result = await hf.translation({
+    inputs: "Hello, good morning people",
+    model: model2,
+    parameters: {
+      "src_lang": "en",
+      "tgt_lang": "es",
+    },
+  });
+  console.log("Result 2: ", result);
+} catch (error) {
+  console.error(error);
+}
